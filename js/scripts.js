@@ -21,15 +21,24 @@ var swiper = new Swiper(".mySwiper", {
   },
 });
 
-// Password visibility toggle
+// Password toggle
 document.getElementById('togglePassword').addEventListener('click', function () {
-  const passwordInput = document.getElementById('password');
-  const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-  passwordInput.setAttribute('type', type);
+  const password = document.getElementById('password');
+  const icon = this;
+  if (password.type === 'password') {
+    password.type = 'text';
+    icon.setAttribute('uk-icon', 'icon: eye');
+  } else {
+    password.type = 'password';
+    icon.setAttribute('uk-icon', 'icon: eye-slash');
+  }
+});
 
-  // Toggle icon
-  const icon = this.getAttribute('uk-icon') === 'icon: eye' ? 'icon: eye-slash' : 'icon: eye';
-  this.setAttribute('uk-icon', icon);
+// Loading state
+document.querySelector('form').addEventListener('submit', function () {
+  const btn = document.querySelector('.btn-login');
+  btn.innerHTML = '<span uk-spinner="ratio: 0.8"></span> Signing In...';
+  btn.disabled = true;
 });
 
 // Form submission

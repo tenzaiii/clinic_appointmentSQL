@@ -1,98 +1,384 @@
-<?php include('header.php'); ?>
-<!-- Main Content -->
-<main>
-    <h1 class="uk-heading-divider uk-text-center">CLINIC DATABASE CRUD</h1>
-    
-    <!-- Trigger button for modal -->
-    <div class="uk-text-center" style="margin: 20px 0;">
-        <button class="uk-button uk-button-primary" uk-toggle="target: #modal-sections">ADD USER</button>
+<?php 
+// ✅ FIX #1: Start output buffering at the VERY TOP
+ob_start();
+include('header.php'); 
+include('dbcon.php'); 
+?>
+
+
+    <!-- SLIDESHOW / HERO SECTION -->
+    <div class="uk-position-relative uk-visible-toggle hero-slideshow" tabindex="-1"
+        uk-slideshow="autoplay: true; autoplay-interval: 3000; min-height: 300; max-height: 600">
+        <ul class="uk-slideshow-items" uk-height-viewport="offset-top: true; offset-bottom: 20">
+            <li>
+                <img src="IMG/banner_2.png" alt="Doctor with patient" uk-cover />
+                <div class="uk-overlay uk-position-center-left uk-text-left hero-overlay">
+                    <h1 class="uk-heading-medium">Your Health, Our Priority</h1>
+                    <p class="uk-text-lead">Fast, easy, and hassle-free scheduling for all your medical needs.</p>
+                    <a href="form.html" class="uk-button uk-button-default">Book Online Now</a>
+                </div>
+            </li>
+            <li>
+                <img src="IMG/banner_1.png" alt="Medical professional" uk-cover />
+                <div class="uk-overlay uk-position-center-right uk-text-left hero-overlay">
+                    <h1 class="uk-heading-medium">Healthy Today, Happier Tomorrow</h1>
+                    <p class="uk-text-lead">A healthier future starts with one simple step — scheduling your visit.</p>
+                    <a href="services.html" class="uk-button uk-button-default">Explore Services</a>
+                </div>
+            </li>
+            <li>
+                <img src="IMG/banner_3.png" alt="Modern clinic interior" uk-cover />
+                <div class="uk-overlay uk-position-center-left uk-text-left hero-overlay">
+                    <h1 class="uk-heading-medium">Expert Doctors. Reliable Service.</h1>
+                    <p class="uk-text-lead">Access top-tier medical experts with our seamless booking platform.</p>
+                    <a href="contact.html" class="uk-button uk-button-default">Find a Doctor</a>
+                </div>
+            </li>
+            <li>
+                <img src="IMG/banner_5.png" alt="Medical professional" uk-cover />
+                <div class="uk-overlay uk-position-center-right uk-text-left hero-overlay">
+                    <h1 class="uk-heading-medium">Convenience for You.</h1>
+                    <p class="uk-text-lead">From scheduling to consultation — we’re with you every step of the way.</p>
+                    <a href="services.html" class="uk-button uk-button-default">Explore Services</a>
+                </div>
+            </li>
+        </ul>
+        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
+            uk-slideshow-item="previous" aria-label="Previous slide"></a>
+        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
+            uk-slideshow-item="next" aria-label="Next slide"></a>
     </div>
 
-    <div class="uk-card uk-card-large uk-card-default" style="margin: 50px">
-        <?php include('dbcon.php'); ?>
+    <!-- SEARCH / FIND SECTION -->
+    <div class="hero-content">
+        <div class="search-form">
+            <form class="uk-grid-small" uk-grid>
+                <div class="uk-width-1-1 uk-width-1-4@m">
+                    <input class="uk-input" type="text" placeholder="Find a doctor...">
+                </div>
+                <div class="uk-width-1-1 uk-width-1-4@m">
+                    <select class="uk-select">
+                        <option>All Specialties</option>
+                        <option>Cardiology</option>
+                        <option>Pediatrics</option>
+                        <option>Dermatology</option>
+                        <option>Orthopedics</option>
+                        <option>Neurology</option>
+                    </select>
+                </div>
+                <div class="uk-width-1-1 uk-width-1-4@m">
+                    <select class="uk-select">
+                        <option>All Locations</option>
+                        <option>Quezon City</option>
+                        <option>Makati</option>
+                        <option>Pasig</option>
+                        <option>Taguig</option>
+                    </select>
+                </div>
+                <div class="uk-width-1-1 uk-width-1-4@m">
+                    <button class="uk-button btn-primary uk-width-1-1">Search</button>
+                </div>
+            </form>
+        </div>
 
-        <table class="uk-table uk-table-hover uk-table-divider">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>FIRST NAME</th>
-                    <th>LAST NAME</th>
-                    <th>EMAIL</th>
-                    <th>CONTACT NUMBER</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                // Fixed query - removed semicolon
-                $query = "SELECT * FROM clinic_acc";
-                $result = mysqli_query($connection, $query);
-
-                if (!$result) {
-                    die("Query Failed: ". mysqli_error($connection));
-                } else {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['id']); ?></td>
-                            <td><?php echo htmlspecialchars($row['first_name']); ?></td>
-                            <td><?php echo htmlspecialchars($row['last_name']); ?></td>
-                            <td><?php echo htmlspecialchars($row['email']); ?></td>
-                            <td><?php echo htmlspecialchars($row['phone_no']); ?></td>
-                        </tr>
-                        <?php
-                    }
-                }
-                ?>
-            </tbody>
-        </table>
-        <?php
-        if(isset($_GET['message'])){
-           echo"<div class='uk-alert uk-alert-primary'>".$_GET['message']."</div>";
-        }
-        ?>
     </div>
-</main>
 
-<!-- Modal Form - Placed outside main content -->
-<form class="uk-form-stacked" action="insert_data.php" method="POST">
-    <div id="modal-sections" uk-modal>
-        <div class="uk-modal-dialog">
-            <button class="uk-modal-close-default" type="button" uk-close></button>
-            <div class="uk-modal-header">
-                <h2 class="uk-modal-title">Add New User</h2>
+    <!-- QUICK LINKS SECTION -->
+    <section class="uk-section quick-links">
+        <div class="uk-container">
+            <div class="uk-grid-medium uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-6@l" uk-grid>
+                <div>
+                    <div class="quick-card">
+                        <div class="icon-wrapper">
+                            <span uk-icon="icon: calendar; ratio: 1.5"></span>
+                        </div>
+                        <h4>Appointments</h4>
+                        <p>Book online 24/7</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="quick-card">
+                        <div class="icon-wrapper">
+                            <span uk-icon="icon: search; ratio: 1.5"></span>
+                        </div>
+                        <h4>Find a Doctor</h4>
+                        <p>Search by specialty</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="quick-card">
+                        <div class="icon-wrapper">
+                            <span uk-icon="icon: location; ratio: 1.5"></span>
+                        </div>
+                        <h4>Locations</h4>
+                        <p>Find our clinics</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="quick-card">
+                        <div class="icon-wrapper">
+                            <span uk-icon="icon: receiver; ratio: 1.5"></span>
+                        </div>
+                        <h4>Emergency</h4>
+                        <p>24/7 hotline</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="quick-card">
+                        <div class="icon-wrapper">
+                            <span uk-icon="icon: file-text; ratio: 1.5"></span>
+                        </div>
+                        <h4>Health Records</h4>
+                        <p>Patient portal</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="quick-card">
+                        <div class="icon-wrapper">
+                            <span uk-icon="icon: credit-card; ratio: 1.5"></span>
+                        </div>
+                        <h4>Insurance</h4>
+                        <p>Check coverage</p>
+                    </div>
+                </div>
             </div>
-            <div class="uk-modal-body">
-                <div class="uk-margin">
-                    <label class="uk-form-label" for="first_name">First Name</label>
-                    <div class="uk-form-controls">
-                        <input class="uk-input" id="first_name" name="first_name" type="text" placeholder="First Name" required>
+        </div>
+    </section>
+
+    <!-- ABOUT SHOWCASE SECTIONS -->
+    <section class="uk-section uk-section-muted uk-padding">
+        <div class="uk-container">
+            <div class="uk-grid-match uk-child-width-1-2@m" uk-grid>
+                <div>
+                    <div class="uk-cover-container uk-border-rounded uk-box-shadow-medium">
+                        <img src="IMG/clinic3.png" alt="Caring for You"
+                            class="uk-animation-reverse uk-transform-origin-top-right uk-border-rounded"
+                            uk-scrollspy="cls: uk-animation-kenburns; repeat: true" uk-cover>
+                        <canvas width="600" height="400"></canvas>
                     </div>
                 </div>
-                <div class="uk-margin">
-                    <label class="uk-form-label" for="last_name">Last Name</label>
-                    <div class="uk-form-controls">
-                        <input class="uk-input" id="last_name" name="last_name" type="text" placeholder="Last Name" required>
-                    </div>
-                </div>
-                <div class="uk-margin">
-                    <label class="uk-form-label" for="email">Email</label>
-                    <div class="uk-form-controls">
-                        <input class="uk-input" id="email" name="email" type="email" placeholder="Email" required>
-                    </div>
-                </div>
-                <div class="uk-margin">
-                    <label class="uk-form-label" for="phone_no">Contact Number</label>
-                    <div class="uk-form-controls">
-                        <input class="uk-input" id="phone_no" name="phone_no" type="text" placeholder="Contact Number" required>
+                <div class="uk-flex uk-flex-middle uk-padding-large">
+                    <div class="showcase">
+                        <h3 class="uk-heading uk-text-center">
+                            <span>Caring for You, One Appointment at a Time</span>
+                        </h3>
+                        <p class="uk-text-center uk-text-lead">
+                            Our clinic is dedicated to giving you the attention and care you deserve, whenever you need
+                            it.
+                        </p>
                     </div>
                 </div>
             </div>
-            <div class="uk-modal-footer uk-text-right">
-                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-                <button type="submit" class="uk-button uk-button-primary" name="add_users">ADD USER</button>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="uk-container">
+            <div class="uk-grid-large uk-child-width-1-2@s uk-child-width-1-4@m uk-text-center" uk-grid>
+                <div>
+                    <div class="stat-item">
+                        <div class="number">25+</div>
+                        <div class="label">Medical Departments</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="stat-item">
+                        <div class="number">180+</div>
+                        <div class="label">Specialist Doctors</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="stat-item">
+                        <div class="number">50+</div>
+                        <div class="label">Clinic Locations</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="stat-item">
+                        <div class="number">99%</div>
+                        <div class="label">Patient Satisfaction</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section class="uk-section uk-section-muted section-padding">
+        <div class="uk-container">
+            <div class="uk-text-center uk-margin-large-bottom">
+                <h2 class="uk-heading-medium">Our Clinic Services</h2>
+                <p class="uk-text-lead">Friendly doctors, professional service, and an easy booking experience all in
+                    one place.</p>
+            </div>
+
+            <div class="uk-grid-match uk-child-width-1-2@s uk-child-width-1-3@m" uk-grid>
+                <!-- Service Item -->
+                <div>
+                    <div class="uk-card uk-card-default uk-card-body uk-text-center service-card">
+                        <span uk-icon="icon: heart; ratio: 3.5" class="service-icon"></span>
+                        <h3 class="uk-card-title uk-margin-remove-bottom">General Practitioner</h3>
+                        <p class="uk-margin-small-top">Comprehensive primary care for your everyday health needs.</p>
+                    </div>
+                </div>
+                <!-- Service Item -->
+                <div>
+                    <div class="uk-card uk-card-default uk-card-body uk-text-center service-card">
+                        <span uk-icon="icon: happy; ratio: 3.5" class="service-icon"></span>
+                        <h3 class="uk-card-title uk-margin-remove-bottom">Dentist</h3>
+                        <p class="uk-margin-small-top">Complete dental care to keep your smile healthy and bright.</p>
+                    </div>
+                </div>
+                <!-- Service Item -->
+                <div>
+                    <div class="uk-card uk-card-default uk-card-body uk-text-center service-card">
+                        <span uk-icon="icon: users; ratio: 3.5" class="service-icon"></span>
+                        <h3 class="uk-card-title uk-margin-remove-bottom">Pediatrician</h3>
+                        <p class="uk-margin-small-top">Specialized healthcare for infants, children, and adolescents.
+                        </p>
+                    </div>
+                </div>
+                <!-- Service Item -->
+                <div>
+                    <div class="uk-card uk-card-default uk-card-body uk-text-center service-card">
+                        <span uk-icon="icon: star; ratio: 3.5" class="service-icon"></span>
+                        <h3 class="uk-card-title uk-margin-remove-bottom">Dermatologist</h3>
+                        <p class="uk-margin-small-top">Expert care for skin, hair, and nail conditions.</p>
+                    </div>
+                </div>
+                <!-- Service Item -->
+                <div>
+                    <div class="uk-card uk-card-default uk-card-body uk-text-center service-card">
+                        <span uk-icon="icon: eye; ratio: 3.5" class="service-icon"></span>
+                        <h3 class="uk-card-title uk-margin-remove-bottom">Ophthalmologist</h3>
+                        <p class="uk-margin-small-top">Vision care and treatment for all types of eye diseases.</p>
+                    </div>
+                </div>
+                <!-- Service Item -->
+                <div>
+                    <div class="uk-card uk-card-default uk-card-body uk-text-center service-card">
+                        <span uk-icon="icon: lifesaver; ratio: 3.5" class="service-icon"></span>
+                        <h3 class="uk-card-title uk-margin-remove-bottom">Cardiologist</h3>
+                        <p class="uk-margin-small-top">Advanced diagnosis and treatment for heart conditions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-text-center uk-margin-large-top">
+                <a href="services.html" class="uk-button uk-button-large"
+                    style="background-color: var(--secondary-color); color: var(--white)">View All Services</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY CHOOSE US -->
+    <section class="uk-section uk-section-default section-padding">
+        <div class="uk-container">
+            <div class="uk-grid-large uk-flex-middle" uk-grid>
+                <div class="uk-width-1-2@m">
+                    <h2 class="uk-heading-medium">Quality Care Made Easy</h2>
+                    <p class="uk-text-large">Convenient online scheduling for fast, reliable, and comfortable clinic
+                        visits.</p>
+                    <p>We understand that your time is valuable. That's why we've designed our booking system to be
+                        simple, intuitive, and available 24/7. Book your appointments anytime, anywhere.</p>
+                    <ul class="uk-list uk-list-large">
+                        <li><span uk-icon="icon: check" class="uk-margin-small-right"
+                                style="color: var(--secondary-color)"></span> Easy online booking</li>
+                        <li><span uk-icon="icon: check" class="uk-margin-small-right"
+                                style="color: var(--secondary-color)"></span> Flexible appointment times</li>
+                        <li><span uk-icon="icon: check" class="uk-margin-small-right"
+                                style="color: var(--secondary-color)"></span> Reminder notifications</li>
+                        <li><span uk-icon="icon: check" class="uk-margin-small-right"
+                                style="color: var(--secondary-color)"></span> Secure patient portal</li>
+                    </ul>
+                </div>
+                <div class="uk-width-1-2@m">
+                    <div class="uk-cover-container uk-border-rounded uk-box-shadow-medium">
+                        <img src="IMG/clinic4.png" alt="Caring for You"
+                            class="uk-animation-reverse uk-transform-origin-top-right uk-border-rounded"
+                            uk-scrollspy="cls: uk-animation-kenburns; repeat: true" uk-cover>
+                        <canvas width="600" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities Overview -->
+    <div class="uk-card uk-card-default uk-card-body ">
+        <h3 class="uk-card-title uk-text-center">What We Offer</h3>
+        <div class="uk-text-center">Experience world-class healthcare made simple and accessible for everyone.</p>
+
+            <!-- Swiper -->
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="uk-card uk-card-default">
+                            <div class="uk-card-media-top">
+                                <img src="IMG/clinic1.png" width="1800" height="1200" alt="Modern facilities">
+                            </div>
+                            <div class="uk-card-body">
+                                <h3 class="uk-card-title">Modern Facilities</h3>
+                                <p>State-of-the-art equipment and comfortable environments for your care.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="uk-card uk-card-default">
+                            <div class="uk-card-media-top">
+                                <img src="IMG/clinic2.png" width="1800" height="1200" alt="Caring staff">
+                            </div>
+                            <div class="uk-card-body">
+                                <h3 class="uk-card-title">Caring Staff</h3>
+                                <p>Compassionate professionals dedicated to your wellbeing.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="uk-card uk-card-default">
+                            <div class="uk-card-media-top">
+                                <img src="IMG/clinic3.png" width="1800" height="1200" alt="Advanced technology">
+                            </div>
+                            <div class="uk-card-body">
+                                <h3 class="uk-card-title">Advanced Technology</h3>
+                                <p>Cutting-edge medical technology for accurate diagnosis and treatment.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="uk-card uk-card-default">
+                            <div class="uk-card-media-top">
+                                <img src="IMG/clinic4.png" width="1800" height="1200" alt="Comfortable spaces">
+                            </div>
+                            <div class="uk-card-body">
+                                <h3 class="uk-card-title">Comfortable Spaces</h3>
+                                <p>Welcoming environments designed for your comfort and peace of mind.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="swiper-pagination"></div>
             </div>
         </div>
     </div>
-</form>
 
-<?php include('footer.php'); ?>
+    <!-- Call to Action -->
+    <section class="uk-section uk-section-primary uk-light" style="background: var(--test-gradient)">
+        <div class="uk-container uk-text-center">
+            <h2 class="uk-heading-small">Ready to Take Control of Your Health?</h2>
+            <p class="uk-text-lead">Book your appointment today and experience healthcare excellence</p>
+            <div class="uk-margin-large-top">
+                <a href="form.html" class="uk-button uk-button-default uk-button-large uk-margin-small-right">Book
+                    Appointment</a>
+                <a href="contact.html" class="uk-button uk-button-secondary uk-button-large">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+<?php 
+// ✅ FIX #3: End output buffering at the bottom
+ob_end_flush();
+include('footer.php'); 
+?>
