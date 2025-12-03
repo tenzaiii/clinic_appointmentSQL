@@ -9,7 +9,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.21.13/dist/css/uikit.min.css" />
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/pagestyles.css">
     <style>
         .profile-avatar {
             width: 36px; height: 36px; background: linear-gradient(135deg, #667eea, #764ba2);
@@ -86,7 +86,7 @@
                             <li><a href="contact.php">Contact</a></li>
                             <li><a href="about.php">About</a></li>
                             <?php if ($is_admin): ?>
-                                <li><a href="dashboard.php" class="uk-text-bold">Dashboard</a></li>
+                                <li><a href="Services/dashboard.php" class="uk-text-bold">Dashboard</a></li>
                             <?php endif; ?>
                         </ul>
                     </div>

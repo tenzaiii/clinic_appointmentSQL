@@ -9,6 +9,7 @@ include("header.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EasyClinic - Find Doctors</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.21.13/dist/css/uikit.min.css" />
+    
     <style>
         .hero-section {
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
