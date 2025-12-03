@@ -142,11 +142,11 @@ mysqli_close($connection);
                                         <?php else: ?>
                                             <span class="uk-badge uk-badge-secondary">No Action</span>
                                         <?php endif; ?>
-                                        <a href="/receipt.php?id=<?php echo $appointment['id']; ?>" 
+                                        <!-- <a href="/CLINIC_APPOINTMENTSQL/receipt.php?id=<?php echo $appointment['id']; ?>" 
                                            class="uk-button uk-button-text uk-button-small" 
                                            uk-tooltip="View Receipt">
                                             <span uk-icon="file-text"></span>
-                                        </a>
+                                        </a> -->
                                     </div>
                                 </td>
                             </tr>

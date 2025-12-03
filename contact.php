@@ -58,8 +58,7 @@ include('dbcon.php');
     font-size: 40px;
     font-weight: 500;
     color:#00baa2;
-    margin-left: 30px;
-    margin-bottom: 30px;
+    margin: 30px;
 }
 
 @keyframes typing{

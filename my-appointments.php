@@ -5,9 +5,18 @@ include('dbcon.php');
 $user_id = $_SESSION['user_id'] ?? '';
 $appointments = [];
 $no_appointments = false;
+$success_msg = '';
+$error_msg = '';
+
+// Handle success/error messages
+if (isset($_GET['success'])) {
+    $success_msg = "Appointment cancelled successfully!";
+}
+if (isset($_GET['error'])) {
+    $error_msg = "Unable to cancel appointment. Please try again.";
+}
 
 if ($user_id) {
-    // ✅ JOIN doctors table for full details
     $query = "SELECT a.*, 
                      d.first_name as doctor_first, d.last_name as doctor_last, 
                      d.specialization, d.location, d.phone_no
@@ -25,7 +34,7 @@ if ($user_id) {
         $no_appointments = empty($appointments);
     }
 } else {
-    header("Location: /login.php");
+    header("Location: login.php");
     exit();
 }
 
@@ -42,8 +51,9 @@ mysqli_close($connection);
     <link rel="stylesheet" href="css/styles.css">
     <style>
         .appointments-hero {
- background: linear-gradient(rgba(0, 128, 255, 0.7), rgba(0, 255, 115, 0.7)),
-    url('IMG/hospital_2.png') center/cover no-repeat;            color: white; padding: 60px 0;
+            background: linear-gradient(rgba(0, 128, 255, 0.7), rgba(0, 255, 115, 0.7)),
+            url('IMG/hospital_2.png') center/cover no-repeat; 
+            color: white; padding: 60px 0;
         }
         .appointment-card {
             transition: all 0.3s; border-radius: 15px;
@@ -61,9 +71,25 @@ mysqli_close($connection);
         .no-appointments {
             text-align: center; padding: 80px 20px; color: #6c757d;
         }
+        .success-alert { background: #d4edda; color: #155724; border-radius: 8px; }
+        .error-alert { background: #f8d7da; color: #721c24; border-radius: 8px; }
     </style>
 </head>
 <body>
+    <!-- Success/Error Alerts -->
+    <?php if ($success_msg): ?>
+        <div class="uk-alert-success uk-margin uk-container" uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <p><?php echo $success_msg; ?></p>
+        </div>
+    <?php endif; ?>
+    <?php if ($error_msg): ?>
+        <div class="uk-alert-danger uk-margin uk-container" uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <p><?php echo $error_msg; ?></p>
+        </div>
+    <?php endif; ?>
+
     <!-- Hero Section -->
     <section class="appointments-hero">
         <div class="uk-container">
@@ -79,7 +105,7 @@ mysqli_close($connection);
                 <span uk-icon="icon: calendar; ratio: 4" class="uk-margin-bottom"></span>
                 <h2 class="uk-heading-medium uk-margin-large-top uk-margin-small-bottom">No Appointments Found</h2>
                 <p class="uk-text-muted uk-margin-large-bottom">Book your first appointment with our specialists!</p>
-                <a href="/find-doctors.php" class="uk-button uk-button-primary uk-button-large">
+                <a href="/CLINIC_APPOINTMENTSQL/form.php" class="uk-button uk-button-primary uk-button-large">
                     <span uk-icon="icon: search"></span> Find Doctors
                 </a>
             </div>
@@ -95,7 +121,7 @@ mysqli_close($connection);
             <div class="uk-grid uk-child-width-1-1 uk-grid-collapse" uk-grid>
                 <?php foreach ($appointments as $appointment): ?>
                 <div>
-                    <div class="appointment-card uk-card uk-card-default uk-card-body uk-padding-large ">
+                    <div class="appointment-card uk-card uk-card-default uk-card-body uk-padding-large">
                         <div class="uk-grid-divider uk-grid uk-child-width-expand@s uk-flex-middle" uk-grid>
                             <!-- Doctor Info -->
                             <div class="uk-width-1-4@s">
@@ -137,29 +163,37 @@ mysqli_close($connection);
                                 </div>
                                 <div class="uk-margin-small-top">
                                     <?php if ($appointment['status'] == 'pending'): ?>
-                                        <a href="#" class="uk-button uk-button-default uk-button-small" uk-toggle="target: #cancel-modal-<?php echo $appointment['id']; ?>">
-                                            Cancel
-                                        </a>
+                                        <button class="uk-button uk-button-danger uk-button-small" 
+                                                uk-toggle="target: #cancel-modal-<?php echo $appointment['id']; ?>">
+                                            Cancel Appointment
+                                        </button>
                                     <?php endif; ?>
-                                    <a href="/CLINIC_APPOINTMENTSQL/receipt.php" class="uk-button uk-button-text uk-button-small">
-                                        <span uk-icon="file-text"></span> Receipt
-                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Cancel Confirmation Modal -->
-                <div id="cancel-modal-<?php echo $appointment['id']; ?>" class="uk-flex-top" uk-modal>
-                    <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-                        <h3 class="uk-modal-title">Cancel Appointment</h3>
-                        <p>Are you sure you want to cancel your appointment with Dr. <?php echo htmlspecialchars($appointment['doctor_first'] . ' ' . $appointment['doctor_last']); ?> on <?php echo $appointment['appointment_date']; ?>?</p>
-                        <div class="uk-margin-top">
-                            <a href="/cancel-appointment.php?id=<?php echo $appointment['id']; ?>" class="uk-button uk-button-danger uk-button-small uk-margin-right">Yes, Cancel</a>
-                            <a href="/CLINIC_APPOINTMENTSQL/my-appointments.php" class="uk-button uk-button-default uk-button-small" uk-close>Keep Appointment</a>
+                    <!-- ✅ FIXED Cancel Confirmation Modal -->
+                    <?php if ($appointment['status'] == 'pending'): ?>
+                    <div id="cancel-modal-<?php echo $appointment['id']; ?>" class="uk-flex-top" uk-modal>
+                        <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+                            <button class="uk-modal-close-default" type="button" uk-close></button>
+                            <h3 class="uk-modal-title"><span uk-icon="icon: warning"></span> Confirm Cancellation</h3>
+                            <p class="uk-margin-remove-top">Are you sure you want to cancel your appointment with 
+                                <strong>Dr. <?php echo htmlspecialchars($appointment['doctor_first'] . ' ' . $appointment['doctor_last']); ?></strong> 
+                                on <strong><?php echo date('M j, Y', strtotime($appointment['appointment_date'])); ?></strong> 
+                                at <strong><?php echo $appointment['preferred_time']; ?></strong>?
+                            </p>
+                            <div class="uk-margin-medium-top uk-flex uk-flex-right">
+                                <button class="uk-button uk-button-default uk-margin-right uk-modal-close" type="button">Keep Appointment</button>
+                                <a href="cancel-appointment.php?id=<?php echo $appointment['id']; ?>" 
+                                   class="uk-button uk-button-danger" onclick="return confirm('Are you absolutely sure? This cannot be undone.')">
+                                    <span uk-icon="icon: trash"></span> Yes, Cancel It
+                                </a>
+                            </div>
                         </div>
                     </div>
+                    <?php endif; ?>
                 </div>
                 <?php endforeach; ?>
             </div>

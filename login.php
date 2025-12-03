@@ -50,21 +50,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 
 <div class="login-container">
-        <?php if ($error): ?>
-                <div class="uk-alert-danger" uk-alert>
-                    <span><?php echo $error; ?></span>
-                </div>
-            <?php endif; ?>
+        
         
         <div class="login-card uk-grid-collapse" uk-grid>
-            <div class="uk-width-1-2@m login-left uk-visible@m">
-                <h1 class="uk-margin-remove-bottom">Welcome to</h1>
-                <h1 class="uk-heading-line uk-margin-remove">Easy<span>Clinic</span></h1>
-                <p class="uk-margin-top">Fast, easy, and hassle-free scheduling</p>
-            </div>
+            <div class="uk-width-1-2@m login-left uk-visible@m" style="background: linear-gradient(rgba(0, 128, 255, 0.7), rgba(0, 255, 115, 0.7)),
+    url('IMG/clinic1.png'); background-size: cover;
+  background-position: center;"></div>
 
             <div class="uk-width-1-1 uk-width-1-2@m login-right">
                 <a href="index.php" class="brand-logo">Easy<span>Clinic</span></a>
+                <?php if ($error): ?>
+                <div class="uk-alert-danger" uk-alert>
+                    <span><?php echo $error; ?></span>
+                </div>
+        <?php endif; ?>
                 <h2 class="login-title">Welcome Back!</h2>
                 <p class="login-subtitle">Sign in to continue to your account</p>
 
@@ -105,6 +104,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.13/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.13/dist/js/uikit-icons.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Password toggle
+            document.getElementById('togglePassword').onclick = function() {
+                const pwd = document.getElementById('password');
+                const icon = this.getAttribute('uk-icon');
+                if (pwd.type === 'password') {
+                    pwd.type = 'text';
+                    this.setAttribute('uk-icon', 'icon: eye');
+                } else {
+                    pwd.type = 'password';
+                    this.setAttribute('uk-icon', 'icon: eye-slash');
+                }
+            };
+
+            // Submit loading
+            document.querySelector('form').onsubmit = function() {
+                const btn = document.querySelector('.btn-login');
+                // Ensure the button is enabled before submission if validation fails
+                if(this.checkValidity()) { 
+                    btn.innerHTML = '<span uk-spinner="ratio: 0.9"></span> Signing In...';
+                    btn.disabled = true;
+                }
+            };
+        });
+    </script>
 </body>
 </html>
 <?php ob_end_flush(); ?>
