@@ -66,9 +66,7 @@ body {
 
 
 .hero-section {
-  background: linear-gradient(rgba(0, 128, 255, 0.7), rgba(0, 255, 115, 0.7)),
-    url('IMG/clinic1.png');  background-size: cover;
-  background-position: center;
+ 
   color: white;
   padding: 80px 0;
   text-align: center;
@@ -269,10 +267,7 @@ body {
 }
 
 .services-hero {
-  background: linear-gradient(rgba(0, 128, 255, 0.7), rgba(0, 255, 115, 0.7)),
-    url('IMG/clinic3.png');
-  background-size: cover;
-  background-position: center;
+
   color: white;
   padding: 80px 0;
   text-align: center;
@@ -409,3 +404,243 @@ h2 {
   color: white;
   border: none;
 } 
+
+/* ---------------------------------------------------- */
+/* ---------------------FAQ PAGE--------------------- */
+/* ---------------------------------------------------- */
+.container1{
+    background-color: #007850;
+    height: 150px;
+    margin-bottom: 50px;
+    align-items: center;
+    }
+
+.container1 h2{
+    font-size: 80px;
+    font-weight: 700;
+    color: white;
+    margin-left: 250px;
+}
+
+.faq-container {
+    max-width: 600px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+.faq-item {
+    background-color: #2d90c1;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.423);
+    overflow: hidden;
+  }
+
+.faq-item input {
+    display: none;
+  }
+
+.faq-question {
+    display: block;
+    padding: 15px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+  }
+
+.faq-question::after {
+    content: '\25BC';
+    position: absolute;
+    right: 20px;
+    transition: transform 0.3s;
+  }
+
+.faq-item input:checked + .faq-question::after {
+    transform: rotate(180deg);
+  }
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.3s ease;
+    background-color: #d1edf3;
+    padding: 0 20px;
+  }
+
+.faq-item input:checked ~ .faq-answer {
+    max-height: 200px;
+    padding: 15px 20px;
+  }
+
+.faq-answer p {
+    margin: 0;
+  }
+
+.typing-text{
+    width: 30ch;
+    margin: 160px, 250px;
+    text-wrap: nowrap;
+    overflow:hidden;
+    animation: typing 2s steps(30) infinite alternate-reverse;
+    font-size: 80px;
+    margin-top: 100px;
+    color:#00baa2;
+    margin-left: 30px;
+}
+
+@keyframes typing{
+    from {
+        width: 0ch;
+    }
+}
+
+.gradient-overlay {
+    position: relative;
+    width: 100%;
+    height: 450px;
+
+    margin-top: 30px;
+}
+
+.gradient-overlay::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        rgba(33, 149, 243, 0.337),   
+        rgba(0, 187, 212, 0.308),    
+        rgba(0, 200, 83, 0.274)     
+    );
+}
+
+.gradient-overlay .content {
+    position: relative;
+    padding: 10px 50px;
+    color: white;
+    width: 60%;
+}
+
+.gradient-overlay h2 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.gradient-overlay p {
+    font-size: 23px;
+    font-weight: 1000;
+    line-height: 1.7;
+    color: black;
+}
+
+/* ---------------------------------------------------- */
+/* ---------------------CONTACT PAGE--------------------- */
+/* ---------------------------------------------------- */
+.gradient-overlay {
+    position: relative;
+    width: 100%;
+    height: 150vh;
+    
+}
+
+.gradient-overlay::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.gradient-overlay .content {
+    position: relative;
+    padding: 10px 50px;
+    color: white;
+    width: 60%;
+}
+
+.uk-card1{
+   color: white;
+   margin-left: 230px;
+   margin-top: 100px;
+   border-radius: 20px;
+   box-shadow: 5px 5px 5px rgb(0, 0, 0);
+   width: 1000px;
+   height: 700px;
+}
+
+.gradient-overlay p {
+    font-size: 23px;
+    font-weight: 1000;
+    line-height: 1.7;
+    color: black;
+}
+
+.uk-card-overlay.custom-card { 
+    background-color: rgba(255, 255, 255, 0.695); 
+}
+
+.typing-text{
+    width: 30ch;
+    text-wrap: nowrap;
+    overflow:hidden;
+    animation: typing 2s steps(30) infinite alternate-reverse;
+    font-size: 40px;
+    font-weight: 500;
+    color:#00baa2;
+    margin-left: 30px;
+    margin-bottom: 30px;
+}
+
+@keyframes typing{
+    from {
+        width: 0ch;
+    }
+}
+
+.contact {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    text-align: left;
+    margin-bottom: 50px;
+}
+
+.detail-block {
+    flex: 1;
+    padding: 20px;
+    background-color: #ecf0f1; 
+    border-radius: 8px;
+    border-left: 4px solid #3498db; 
+}
+
+.detail-block h2 {
+    font-size: 1.4em;
+    color: #3498db; 
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.detail-info {
+    line-height: 1.6;
+    margin-bottom: 5px;
+    color: #2c3e50;
+    font-style: normal;
+}
+
+.detail-description {
+    color: #7f8c8d;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #bdc3c7;
+}

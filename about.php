@@ -1,7 +1,7 @@
 <?php 
 // ✅ FIX #1: Start output buffering at the VERY TOP
 ob_start();
-include('headerPages.php'); 
+include('header.php'); 
 include('dbcon.php'); 
 ?>
     <!-- Hero Section -->

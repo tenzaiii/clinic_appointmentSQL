@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,32 +11,89 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.21.13/dist/css/uikit.min.css" />
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/pageStyles.css">
     <style>
         .profile-avatar {
-            width: 36px; height: 36px; background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
-            font-weight: 600; color: white; font-size: 14px; margin-right: 10px;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+            font-size: 14px;
+            margin-right: 10px;
         }
-        .profile-header { 
-            background: #f8f9fa; 
-            border-bottom: 1px solid #e9ecef; 
-            padding: 20px; 
+
+        .profile-header {
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            padding: 20px;
         }
-        .profile-info { font-size: 16px; margin-bottom: 4px; }
-        .profile-email { font-size: 14px; color: #6c757d; }
-        .dropdown-item:hover { background: #f8f9fa !important; }
-        .logout-item { color: #dc3545 !important; }
-        .logout-item:hover { background: #f8d7da !important; }
-        .uk-dropdown { z-index: 1050; }
+
+        .profile-info {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .profile-email {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .dropdown-item {
+            display: flex !important;
+            /* ✅ Flex for icon alignment */
+            align-items: center !important;
+            padding: 10px 15px !important;
+            color: #333 !important;
+            text-decoration: none !important;
+            border-radius: 8px !important;
+            transition: background 0.2s !important;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f9fa !important;
+            color: #000 !important;
+        }
+
+        .logout-item {
+            color: #dc3545 !important;
+        }
+
+        .logout-item:hover {
+            background: #f8d7da !important;
+            color: #dc3545 !important;
+        }
+
+        /* ✅ Remove button styles that block clicks */
+        .day-btn,
+        .any-day-btn {
+            /* Only for day selector */
+            pointer-events: auto;
+        }
+
+
+        .uk-dropdown {
+            z-index: 1050;
+        }
+
         .admin-badge {
-            background: #dc3545; color: white; font-size: 10px; padding: 2px 6px;
-            border-radius: 10px; font-weight: 600; margin-left: 5px;
+            background: #dc3545;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 600;
+            margin-left: 5px;
         }
     </style>
 </head>
 
 <body>
-    <?php 
+    <?php
     session_start();
     $is_logged_in = isset($_SESSION['user_id']);
     $user_name = $is_logged_in ? $_SESSION['user_name'] : '';
@@ -69,7 +127,7 @@
                     <div class="uk-navbar-left">
                         <!-- Mobile toggle -->
                         <a class="uk-navbar-toggle uk-hidden@m" uk-navbar-toggle-icon href="#"
-                            uk-toggle="target: #mobile-dropdown; cls: uk-open; close: #profile-dropdown" 
+                            uk-toggle="target: #mobile-dropdown; cls: uk-open; close: #profile-dropdown"
                             aria-label="Toggle menu"></a>
 
                         <!-- Brand Logo -->
@@ -97,8 +155,8 @@
                             <?php if ($is_logged_in): ?>
                                 <!-- User Profile Dropdown Trigger -->
                                 <li>
-                                    <a class="uk-link-reset" href="#" 
-                                       uk-toggle="target: #profile-dropdown; cls: uk-open; close: #mobile-dropdown">
+                                    <a class="uk-link-reset" href="#"
+                                        uk-toggle="target: #profile-dropdown; cls: uk-open; close: #mobile-dropdown">
                                         <div class="profile-avatar">
                                             <?php echo strtoupper(substr($user_name, 0, 2)); ?>
                                         </div>
@@ -121,55 +179,72 @@
 
         <!-- Profile Dropdown - Closes mobile dropdown -->
         <?php if ($is_logged_in): ?>
-        <div id="profile-dropdown" class="uk-dropdown" 
-             uk-dropdown="mode: click; pos: bottom-right; offset: 10; close: #mobile-dropdown">
-            <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid-collapse" uk-grid>
-                <div class="profile-header">
-                    <div class="uk-flex uk-flex-middle">
-                        <div class="profile-avatar" style="width: 56px; height: 56px; font-size: 18px; margin-right: 15px;">
-                            <?php echo strtoupper(substr($user_name, 0, 2)); ?>
-                        </div>
-                        <div>
-                            <div class="profile-info"><?php echo htmlspecialchars($user_name); ?></div>
-                            <div class="profile-email"><?php echo htmlspecialchars($user_email); ?></div>
-                            <?php if ($is_admin): ?>
-                                <span class="admin-badge uk-margin-small-top uk-display-block">Administrator</span>
-                            <?php endif; ?>
+            <div id="profile-dropdown" class="uk-dropdown"
+                uk-dropdown="mode: click; pos: bottom-right; offset: 10; close: #mobile-dropdown">
+                <div class="uk-navbar-dropdown-grid uk-child-width-1-1 uk-grid-collapse" uk-grid>
+                    <div class="profile-header">
+                        <div class="uk-flex uk-flex-middle">
+                            <div class="profile-avatar"
+                                style="width: 56px; height: 56px; font-size: 18px; margin-right: 15px;">
+                                <?php echo strtoupper(substr($user_name, 0, 2)); ?>
+                            </div>
+                            <div>
+                                <div class="profile-info"><?php echo htmlspecialchars($user_name); ?></div>
+                                <div class="profile-email"><?php echo htmlspecialchars($user_email); ?></div>
+                                <?php if ($is_admin): ?>
+                                    <span class="admin-badge uk-margin-small-top uk-display-block">Administrator</span>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Navigation Menu -->
-                <div class="uk-padding-small">
-                    <ul class="uk-nav uk-nav-default uk-margin-remove-bottom">
-                        <li class="uk-active"><a href="my-appointments.php" class="dropdown-item">
-                            <span uk-icon="icon: calendar" class="uk-margin-small-right"></span>My Appointments
-                        </a></li>
-                        <li><a href="profile.php" class="dropdown-item">
-                            <span uk-icon="icon: settings" class="uk-margin-small-right"></span>Profile Settings
-                        </a></li>
-                        <?php if ($is_admin): ?>
-                            <li><a href="dashboard.php" class="dropdown-item uk-text-bold">
-                                <span uk-icon="icon: table" class="uk-margin-small-right"></span>Admin Dashboard
-                            </a></li>
-                            <li><a href="manage-doctors.php" class="dropdown-item">
-                                <span uk-icon="icon: users" class="uk-margin-small-right"></span>Manage Doctors
-                            </a></li>
-                        <?php endif; ?>
-                        <li><a href="prescriptions.php" class="dropdown-item">
-                            <span uk-icon="icon: file-text" class="uk-margin-small-right"></span>Prescriptions
-                        </a></li>
-                        <li class="uk-nav-divider"></li>
-                        <li>
-                            <a href="logout.php" class="logout-item uk-flex uk-flex-middle dropdown-item">
-                                <span uk-icon="icon: sign-out" class="uk-margin-small-right"></span>
-                                Sign Out
-                            </a>
-                        </li>
-                    </ul>
+                    <!-- Navigation Menu -->
+                    <div class="uk-padding-small">
+                        <ul class="uk-nav uk-dropdown-nav uk-margin-remove-bottom"> <!-- ✅ uk-dropdown-nav -->
+                            <li class="uk-active">
+                                <a href="/my-appointments.php" class="dropdown-item"> <!-- ✅ Root-relative href -->
+                                    <span uk-icon="icon: calendar" class="uk-margin-small-right"></span>
+                                    My Appointments
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/profile.php" class="dropdown-item">
+                                    <span uk-icon="icon: settings" class="uk-margin-small-right"></span>
+                                    Profile Settings
+                                </a>
+                            </li>
+                            <?php if ($is_admin): ?>
+                                <li>
+                                    <a href="/dashboard.php" class="dropdown-item uk-text-bold">
+                                        <span uk-icon="icon: table" class="uk-margin-small-right"></span>
+                                        Admin Dashboard
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/manage-doctors.php" class="dropdown-item">
+                                        <span uk-icon="icon: users" class="uk-margin-small-right"></span>
+                                        Manage Doctors
+                                    </a>
+                                </li>
+                            <?php endif; ?>
+                            <li>
+                                <a href="/prescriptions.php" class="dropdown-item">
+                                    <span uk-icon="icon: file-text" class="uk-margin-small-right"></span>
+                                    Prescriptions
+                                </a>
+                            </li>
+                            <li class="uk-nav-divider"></li>
+                            <li>
+                                <a href="/logout.php" class="logout-item dropdown-item">
+                                    <span uk-icon="icon: sign-out" class="uk-margin-small-right"></span>
+                                    Sign Out
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
-        </div>
         <?php endif; ?>
 
         <!-- Mobile Dropdown - Closes profile dropdown -->
@@ -193,15 +268,18 @@
                             <?php echo htmlspecialchars($user_name); ?>
                             <?php if ($is_admin): ?><span class="admin-badge">ADMIN</span><?php endif; ?>
                         </li>
-                        <li><a href="my-appointments.php"><span uk-icon="icon: calendar" class="uk-margin-small-right"></span>Appointments</a></li>
-                        <li><a href="profile.php"><span uk-icon="icon: settings" class="uk-margin-small-right"></span>Profile</a></li>
+                        <li><a href="my-appointments.php"><span uk-icon="icon: calendar"
+                                    class="uk-margin-small-right"></span>Appointments</a></li>
+                        <li><a href="profile.php"><span uk-icon="icon: settings"
+                                    class="uk-margin-small-right"></span>Profile</a></li>
                         <?php if ($is_admin): ?>
-                            <li><a href="dashboard.php"><span uk-icon="icon: table" class="uk-margin-small-right"></span>Dashboard</a></li>
+                            <li><a href="dashboard.php"><span uk-icon="icon: table"
+                                        class="uk-margin-small-right"></span>Dashboard</a></li>
                         <?php endif; ?>
                         <li class="uk-nav-divider"></li>
                         <li><a href="logout.php" class="logout-item">
-                            <span uk-icon="icon: sign-out" class="uk-margin-small-right"></span>Sign Out
-                        </a></li>
+                                <span uk-icon="icon: sign-out" class="uk-margin-small-right"></span>Sign Out
+                            </a></li>
                     <?php else: ?>
                         <li class="uk-nav-divider"></li>
                         <li><a href="login.php">LOG IN</a></li>
@@ -220,4 +298,5 @@
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.13/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.13/dist/js/uikit-icons.min.js"></script>
 </body>
+
 </html>

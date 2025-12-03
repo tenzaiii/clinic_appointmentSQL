@@ -9,8 +9,20 @@ include("header.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EasyClinic - Find Doctors</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.21.13/dist/css/uikit.min.css" />
-    
+    <link rel="stylesheet" href="css/styles.css">
     <style>
+          :root {
+  --primary-color: #1e87f0;
+  --secondary-color: #32d296;
+  --test-gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  --accent-teal: #00A6D6;
+  --bg-light: #F5F7FB;
+  --dark-text: #243746;
+  --light-text: #6B7280;
+  --white: #FFFFFF;
+  --success: #28A745;
+  --main-color: #c4ddf3;
+}
         .hero-section {
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
                         url('IMG/hospital_1.jpg') center/cover no-repeat;
@@ -202,3 +214,4 @@ include("header.php");
 <?php include('footer.php'); ?>
 </body>
 </html>
+

@@ -65,6 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && (!empty($_GET['specialization']) || !
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor Search Results - EasyClinic</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.21.13/dist/css/uikit.min.css" />
+        <link rel="stylesheet" href="css/styles.css">
+
     <style>
         .results-hero {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);

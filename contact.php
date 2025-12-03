@@ -1,17 +1,119 @@
 <?php 
 // ✅ FIX #1: Start output buffering at the VERY TOP
 ob_start();
-include('headerPages.php'); 
+include('header.php'); 
 include('dbcon.php'); 
 ?>
+<style>
+    .gradient-overlay {
+    position: relative;
+    width: 100%;
+    height: 150vh;
+}
 
+.gradient-overlay::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.gradient-overlay .content {
+    position: relative;
+    padding: 10px 50px;
+    color: white;
+    width: 60%;
+
+}
+
+.uk-card1{
+   color: white;
+   margin-left: 230px;
+   margin-top: 100px;
+   border-radius: 20px;
+   box-shadow: 5px 5px 5px rgb(0, 0, 0);
+   width: 1000px;
+   height: 700px;
+
+}
+
+.gradient-overlay p {
+    font-size: 23px;
+    font-weight: 1000;
+    line-height: 1.7;
+    color: black;
+}
+
+.uk-card-overlay.custom-card { 
+    background-color: rgba(255, 255, 255, 0.695); 
+}
+
+.typing-text{
+    width: 30ch;
+    text-wrap: nowrap;
+    overflow:hidden;
+    animation: typing 2s steps(30) infinite alternate-reverse;
+    font-size: 40px;
+    font-weight: 500;
+    color:#00baa2;
+    margin-left: 30px;
+    margin-bottom: 30px;
+}
+
+@keyframes typing{
+    from {
+        width: 0ch;
+    }
+}
+
+.contact {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    text-align: left;
+    margin-bottom: 50px;
+}
+
+.detail-block {
+    flex: 1;
+    padding: 20px;
+    background-color: #ecf0f1; 
+    border-radius: 8px;
+    border-left: 4px solid #3498db; 
+}
+
+.detail-block h2 {
+    font-size: 1.4em;
+    color: #3498db; 
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.detail-info {
+    line-height: 1.6;
+    margin-bottom: 5px;
+    color: #2c3e50;
+    font-style: normal;
+}
+
+.detail-description {
+    color: #7f8c8d;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #bdc3c7;
+}
+
+</style>
 
 <div class="gradient-overlay" style="background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(1, 255, 196, 0.818) 100%), url('IMG/hospital_3.png');   
     background-size: cover;
     background-position: center;">
     <div class="content">
         <div>
-        <div class="uk-card1 uk-card-overlay custom-card uk-card-hover uk-card-body">
+        <div class="uk-card1 uk-card-overlay custom-card uk-card-hover uk-card-body uk-container-large">
         <div class="typing-text">Contact Us</div>
     
 <main class="contact">
