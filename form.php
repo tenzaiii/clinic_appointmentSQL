@@ -24,13 +24,13 @@ include("header.php");
   --main-color: #c4ddf3;
 }
         .hero-section {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                        url('IMG/hospital_1.jpg') center/cover no-repeat;
+            background: linear-gradient(rgba(0, 128, 255, 0.7), rgba(0, 255, 115, 0.7)),
+    url('IMG/hospital_2.png') center/cover no-repeat;      
             height: 60vh; min-height: 500px;
             display: flex; align-items: center; justify-content: center; color: white;
             text-align: center; position: relative;
         }
-        .hero-text { font-size: 4rem; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .hero-text { font-size: 4rem; font-weight: 700; color: var(--bg-light); text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
         .search-section { background: white; padding: 60px 0; }
         .search-card { 
             background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.1);
@@ -50,18 +50,18 @@ include("header.php");
             text-align: center; font-size: 14px;
         }
         .day-btn:hover { 
-            background: #f8f9fa; border-color: #667eea;
+            background: #f8f9fa; border-color: var(--secondary-color);
         }
         .day-btn.uk-active { 
-            background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-color: #667eea;
+            background: var(--test-gradient); color: white; border-color: var(--secondary-color);
             transform: translateY(-2px); box-shadow: 0 8px 25px rgba(102,126,234,0.3);
         }
         .any-day-btn {
-            grid-column: 1 / -1; background: #28a745; color: white; border-color: #28a745;
+            grid-column: 1 / -1; background: white;  border-color: 2px solid #e9ecef;
             font-weight: 700; font-size: 16px;
         }
         .any-day-btn:hover, .any-day-btn.uk-active {
-            background: #218838; border-color: #1e7e34; transform: none;
+            background: var(--test-gradient); border-color: var(--secondary-color); transform: none;
         }
         @media (max-width: 768px) { 
             .hero-text { font-size: 2.5rem; } 
@@ -113,7 +113,7 @@ include("header.php");
                         </div>
                     </div>
 
-                    <h3 class="uk-heading-line uk-margin-medium-top uk-margin-small-bottom">Available Days <small>(Select multiple or "Any Day")</small></h3>
+                    <h3 class="uk-heading1 uk-margin-medium-top uk-margin-small-bottom">Available Days <small>(Select multiple or "Any Day")</small></h3>
                     <div class="day-buttons">
                         <!-- ✅ FIXED: Use null coalescing operator -->
                         <?php $selected_days = $_GET['days'] ?? ''; ?>
@@ -129,8 +129,7 @@ include("header.php");
                         $days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
                         foreach ($days as $day): ?>
                             <label style="cursor: pointer;">
-                                <input type="checkbox" name="days[]" value="<?php echo $day; ?>" 
-                                       class="uk-hidden" 
+                                <input type="checkbox" name="days[]" value="<?php echo $day; ?>" class="uk-hidden" 
                                        <?php echo in_array($day, $days_array) ? 'checked' : ''; ?>
                                        onchange="updateDaySelection()">
                                 <button type="button" class="day-btn uk-button <?php echo in_array($day, $days_array) ? 'uk-active' : ''; ?>" 
@@ -143,7 +142,7 @@ include("header.php");
                         <input type="hidden" name="days" id="selected-days" value="<?php echo htmlspecialchars($selected_days); ?>">
                     </div>
 
-                    <button type="submit" class="uk-button uk-button-primary uk-button-large uk-width-1-1 uk-margin-medium-top">
+                    <button type="submit" class="uk-button uk-button-large uk-width-1-1 uk-margin-medium-top" style="background: var(--secondary-color); color: white;">
                         <span uk-icon="icon: search"></span> Find Available Doctors
                     </button>
                 </form>

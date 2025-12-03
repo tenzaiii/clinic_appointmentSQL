@@ -147,7 +147,7 @@ margin: auto;
     font-size: 23px;
     font-weight: 1000;
     line-height: 1.7;
-    color: black;
+    color: white;
     text-align: center;
 }
 </style>

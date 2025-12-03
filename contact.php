@@ -108,9 +108,8 @@ include('dbcon.php');
 
 </style>
 
-<div class="gradient-overlay" style="background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(1, 255, 196, 0.818) 100%), url('IMG/hospital_3.png');   
-    background-size: cover;
-    background-position: center;">
+<div class="gradient-overlay" style="background: linear-gradient(rgba(0, 128, 255, 0.7), rgba(0, 255, 115, 0.7)),
+    url('IMG/hospital_3.png') center/cover no-repeat;;">
     <div class="content">
         <div>
         <div class="uk-card1 uk-card-overlay custom-card uk-card-hover uk-card-body uk-container-large">

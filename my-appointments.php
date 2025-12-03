@@ -42,8 +42,8 @@ mysqli_close($connection);
     <link rel="stylesheet" href="css/styles.css">
     <style>
         .appointments-hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white; padding: 60px 0;
+ background: linear-gradient(rgba(0, 128, 255, 0.7), rgba(0, 255, 115, 0.7)),
+    url('IMG/hospital_2.png') center/cover no-repeat;            color: white; padding: 60px 0;
         }
         .appointment-card {
             transition: all 0.3s; border-radius: 15px;
@@ -95,7 +95,7 @@ mysqli_close($connection);
             <div class="uk-grid uk-child-width-1-1 uk-grid-collapse" uk-grid>
                 <?php foreach ($appointments as $appointment): ?>
                 <div>
-                    <div class="appointment-card uk-card uk-card-default uk-card-body uk-padding-large">
+                    <div class="appointment-card uk-card uk-card-default uk-card-body uk-padding-large ">
                         <div class="uk-grid-divider uk-grid uk-child-width-expand@s uk-flex-middle" uk-grid>
                             <!-- Doctor Info -->
                             <div class="uk-width-1-4@s">
@@ -141,7 +141,7 @@ mysqli_close($connection);
                                             Cancel
                                         </a>
                                     <?php endif; ?>
-                                    <a href="/receipt.php" class="uk-button uk-button-text uk-button-small">
+                                    <a href="/CLINIC_APPOINTMENTSQL/receipt.php" class="uk-button uk-button-text uk-button-small">
                                         <span uk-icon="file-text"></span> Receipt
                                     </a>
                                 </div>
@@ -157,7 +157,7 @@ mysqli_close($connection);
                         <p>Are you sure you want to cancel your appointment with Dr. <?php echo htmlspecialchars($appointment['doctor_first'] . ' ' . $appointment['doctor_last']); ?> on <?php echo $appointment['appointment_date']; ?>?</p>
                         <div class="uk-margin-top">
                             <a href="/cancel-appointment.php?id=<?php echo $appointment['id']; ?>" class="uk-button uk-button-danger uk-button-small uk-margin-right">Yes, Cancel</a>
-                            <a href="my-appointments" class="uk-button uk-button-default uk-button-small" uk-close>Keep Appointment</a>
+                            <a href="/CLINIC_APPOINTMENTSQL/my-appointments.php" class="uk-button uk-button-default uk-button-small" uk-close>Keep Appointment</a>
                         </div>
                     </div>
                 </div>

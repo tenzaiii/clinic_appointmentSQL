@@ -68,8 +68,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && (!empty($_GET['specialization']) || !
         <link rel="stylesheet" href="css/styles.css">
 
     <style>
+             :root {
+  --primary-color: #1e87f0;
+  --secondary-color: #32d296;
+  --test-gradient: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  --accent-teal: #00A6D6;
+  --bg-light: #F5F7FB;
+  --dark-text: #243746;
+  --light-text: #6B7280;
+  --white: #FFFFFF;
+  --success: #28A745;
+  --main-color: #c4ddf3;}
+  
         .results-hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background:  linear-gradient(rgba(0, 128, 255, 0.7), rgba(0, 255, 115, 0.7)),
+    url('IMG/hospital_2.png') center/cover no-repeat;;
             color: white;
             padding: 80px 0;
             text-align: center;
@@ -157,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && (!empty($_GET['specialization']) || !
                                 <div class="uk-flex uk-flex-middle uk-margin-bottom">
                                     <div class="uk-width-1-6">
                                         <div
-                                            style="width: 60px; height: 60px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 18px;">
+                                            style="width: 60px; height: 60px; background: linear-gradient(rgba(0, 128, 255, 0.7), rgba(0, 255, 115, 0.7)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 18px;">
                                             <?php echo strtoupper(substr($doctor['first_name'], 0, 1) . substr($doctor['last_name'], 0, 1)); ?>
                                         </div>
                                     </div>
@@ -186,7 +199,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && (!empty($_GET['specialization']) || !
                                     </p>
 
                                     <a href="book-appointment.php?id=<?php echo $doctor['id']; ?>"
-                                        class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-top">
+                                        class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-top" style="background-color: #32d296;">
                                         Book Appointment
                                     </a>
                                 </div>
