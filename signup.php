@@ -1,12 +1,17 @@
-<?php 
+<?php
 ob_start();
 session_start();
 include('dbcon.php');
 
 $error = $success = '';
 $form_data = [
-    'first_name' => '', 'last_name' => '', 'email' => '', 'phone_no' => '', 
-    'dob' => '', 'password' => '', 'confirm_password' => ''
+    'first_name' => '',
+    'last_name' => '',
+    'email' => '',
+    'phone_no' => '',
+    'dob' => '',
+    'password' => '',
+    'confirm_password' => ''
 ];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -18,38 +23,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $form_data['dob'] = $_POST['dob'];
     $form_data['password'] = $_POST['password'];
     $form_data['confirm_password'] = $_POST['confirm_password'];
-    
+
     // Comprehensive validation
     $errors = [];
-    
-    if (empty($form_data['first_name'])) $errors[] = "First name is required";
-    elseif (!preg_match("/^[a-zA-Z\s]+$/", $form_data['first_name'])) $errors[] = "First name must contain only letters";
-    
-    if (empty($form_data['last_name'])) $errors[] = "Last name is required";
-    elseif (!preg_match("/^[a-zA-Z\s]+$/", $form_data['last_name'])) $errors[] = "Last name must contain only letters";
-    
-    if (empty($form_data['email'])) $errors[] = "Email is required";
-    elseif (!filter_var($form_data['email'], FILTER_VALIDATE_EMAIL)) $errors[] = "Invalid email format";
-    
-    if (empty($form_data['phone_no'])) $errors[] = "Phone number is required";
-    elseif (!preg_match("/^[0-9+\-\s\(\)]{10,15}$/", $form_data['phone_no'])) $errors[] = "Invalid phone number format";
-    
-    if (empty($form_data['dob'])) $errors[] = "Date of birth is required";
-    elseif (strtotime($form_data['dob']) > strtotime('-13 years')) $errors[] = "Must be at least 13 years old";
-    
-    if (empty($form_data['password'])) $errors[] = "Password is required";
-    elseif (strlen($form_data['password']) < 6) $errors[] = "Password must be at least 6 characters";
-    elseif ($form_data['password'] !== $form_data['confirm_password']) $errors[] = "Passwords do not match";
-    
+
+    if (empty($form_data['first_name']))
+        $errors[] = "First name is required";
+    elseif (!preg_match("/^[a-zA-Z\s]+$/", $form_data['first_name']))
+        $errors[] = "First name must contain only letters";
+
+    if (empty($form_data['last_name']))
+        $errors[] = "Last name is required";
+    elseif (!preg_match("/^[a-zA-Z\s]+$/", $form_data['last_name']))
+        $errors[] = "Last name must contain only letters";
+
+    if (empty($form_data['email']))
+        $errors[] = "Email is required";
+    elseif (!filter_var($form_data['email'], FILTER_VALIDATE_EMAIL))
+        $errors[] = "Invalid email format";
+
+    if (empty($form_data['phone_no']))
+        $errors[] = "Phone number is required";
+    elseif (!preg_match("/^[0-9+\-\s\(\)]{10,15}$/", $form_data['phone_no']))
+        $errors[] = "Invalid phone number format";
+
+    if (empty($form_data['dob']))
+        $errors[] = "Date of birth is required";
+    elseif (strtotime($form_data['dob']) > strtotime('-13 years'))
+        $errors[] = "Must be at least 13 years old";
+
+    if (empty($form_data['password']))
+        $errors[] = "Password is required";
+    elseif (strlen($form_data['password']) < 6)
+        $errors[] = "Password must be at least 6 characters";
+    elseif ($form_data['password'] !== $form_data['confirm_password'])
+        $errors[] = "Passwords do not match";
+
     // Database checks
     if (empty($errors)) {
-        $check_email = "SELECT id FROM clinic_acc WHERE email='" . 
-                       mysqli_real_escape_string($connection, $form_data['email']) . "'";
+        $check_email = "SELECT id FROM clinic_acc WHERE email='" .
+            mysqli_real_escape_string($connection, $form_data['email']) . "'";
         if (mysqli_num_rows(mysqli_query($connection, $check_email)) > 0) {
             $errors[] = "Email already registered";
         }
     }
-    
+
     // Insert if no errors
     if (empty($errors)) {
         $first_name = mysqli_real_escape_string($connection, $form_data['first_name']);
@@ -59,10 +77,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $dob = mysqli_real_escape_string($connection, $form_data['dob']);
         $hashed_pass = password_hash($form_data['password'], PASSWORD_DEFAULT);
         $id = time() % 100000;
-        
+
         $query = "INSERT INTO clinic_acc (id, first_name, last_name, email, phone_no, dob, password) 
                   VALUES ('$id', '$first_name', '$last_name', '$email', '$phone_no', '$dob', '$hashed_pass')";
-        
+
         if (mysqli_query($connection, $query)) {
             $success = "Account created successfully! Please <a href='login.php'>login</a>.";
         } else {
@@ -71,13 +89,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $error = implode('<br>', $errors);
     }
-    
+
     mysqli_close($connection);
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,30 +104,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.21.13/dist/css/uikit.min.css" />
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
     <div class="signup-container">
-        <?php if ($error): ?>
-                <div class="uk-alert-danger" uk-alert>
-                    <?php echo $error; ?>
-                </div>
-            <?php endif; ?>
-            
-            <?php if ($success): ?>
-                <div class="uk-alert-success" uk-alert>
-                    <?php echo $success; ?>
-                </div>
-            <?php endif; ?>
-            
+
+
+        <?php if ($success): ?>
+            <div class="uk-alert-success" uk-alert>
+                <?php echo $success; ?>
+            </div>
+        <?php endif; ?>
+
         <form method="POST" action="" novalidate>
             <div class="signup-card uk-grid-collapse" uk-grid>
                 <!-- Left Column - Branding -->
-               <div class="uk-width-1-2@m login-left uk-visible@m" style="background: linear-gradient(rgba(0, 128, 255, 0.7), rgba(0, 255, 115, 0.7)),
+                <div class="uk-width-1-2@m signup-left uk-visible@m" style="background: linear-gradient(rgba(0, 128, 255, 0.7), rgba(0, 255, 115, 0.7)),
             url('IMG/clinic1.png'); background-size: cover;
         background-position: center;"></div>
 
                 <!-- Right Column - Signup Form -->
                 <div class="uk-width-1-1 uk-width-1-2@m signup-right">
                     <a href="login.php" class="brand-logo">Easy<span>Clinic</span></a>
+                    <?php if ($error): ?>
+                        <div class="uk-alert-danger" uk-alert>
+                            <?php echo $error; ?>
+                        </div>
+                    <?php endif; ?>
 
                     <h2 class="signup-title">Create Your Account</h2>
                     <p class="signup-subtitle">Join thousands of patients managing their health online</p>
@@ -176,39 +197,71 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             Already have an account? <a href="login.php">Log in</a>
         </p>
     </div>
-    
-         
+    </div>
+
+    </div>
+    </div>
+    </div>
+
 
 
 
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.13/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.13/dist/js/uikit-icons.min.js"></script>
-    
+ <!-- local js -->
+    <script src="js/scripts.js"></script>
     <script>
         // Real-time password confirmation
         document.getElementById('password').addEventListener('input', checkPasswordMatch);
         document.getElementById('confirm_password').addEventListener('input', checkPasswordMatch);
-        
+
         function checkPasswordMatch() {
             const pass = document.getElementById('password').value;
             const confirm = document.getElementById('confirm_password').value;
             const confirmField = document.getElementById('confirm_password');
-            
+
             if (confirm && pass !== confirm) {
                 confirmField.setCustomValidity('Passwords do not match');
             } else {
                 confirmField.setCustomValidity('');
             }
         }
-        
+
         // Form submission loading
-        document.querySelector('form').addEventListener('submit', function() {
+        document.querySelector('form').addEventListener('submit', function () {
             const btn = this.querySelector('button[type="submit"]');
             btn.innerHTML = '<span uk-spinner="ratio: 0.8"></span> Creating Account...';
             btn.disabled = true;
         });
     </script>
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Password toggle
+            document.getElementById('togglePassword').onclick = function() {
+                const pwd = document.getElementById('password');
+                const icon = this.getAttribute('uk-icon');
+                if (pwd.type === 'password') {
+                    pwd.type = 'text';
+                    this.setAttribute('uk-icon', 'icon: eye');
+                } else {
+                    pwd.type = 'password';
+                    this.setAttribute('uk-icon', 'icon: eye-slash');
+                }
+            };
 
-<?php ob_end_flush(); ?>
+            // Submit loading
+            document.querySelector('form').onsubmit = function() {
+                const btn = document.querySelector('.btn-login');
+                // Ensure the button is enabled before submission if validation fails
+                if(this.checkValidity()) { 
+                    btn.innerHTML = '<span uk-spinner="ratio: 0.9"></span> Signing In...';
+                    btn.disabled = true;
+                }
+            };
+        });
+    </script>
+
+    <?php ob_end_flush(); ?>
 </body>
+
 </html>

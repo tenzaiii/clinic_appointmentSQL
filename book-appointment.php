@@ -116,9 +116,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php if ($success_message): ?>
             <!-- ✅ SUCCESS - Appointment Confirmed -->
             <div class="uk-text-center uk-margin-large uk-padding-large booking-confirmation">
-                <div class="confirmation-badge">✅ Appointment Booked!</div>
+                <div class="confirmation-badge">✅ Appointment Pending!</div>
                 <h4 class="uk-heading-large uk-margin-remove"><?php echo $success_message; ?></h4>
-                <p class="uk-text-lead uk-margin-large-top">Check your email for confirmation details.</p>
+                <p class="uk-text-lead uk-margin-large-top">Waiting for approval</p>
                 <div class="uk-margin-large-top">
                     <a href="/CLINIC_APPOINTMENTSQL/my-appointments.php" class="uk-button uk-button-large uk-margin-right" style="background: #32d296;">
                         <span uk-icon="icon: calendar"></span> View My Appointments

@@ -730,7 +730,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 20px 60px;
     background: var(--test-gradient);
 }
 
@@ -742,6 +742,7 @@ body {
   width: 100%;
   background: white;
   margin: 20px 0;
+  padding: auto;
 }
 
 .signup-left {
@@ -755,7 +756,7 @@ body {
 }
 
 .signup-right {
-  padding: 60px 50px;
+  padding: 60px 120px;
 }
 
 .signup-title {

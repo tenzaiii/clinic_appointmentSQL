@@ -83,13 +83,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                     </div>
 
-                    <div class="remember-forgot">
+                    <!-- <div class="remember-forgot">
                         <label class="remember-me">
                             <input type="checkbox" name="remember">
                             <span>Remember me</span>
                         </label>
                         <a href="#" class="forgot-password">Forgot Password?</a>
-                    </div>
+                    </div> -->
 
                     <button type="submit" name="login" class="btn-login">Sign In</button>
                 </form>
